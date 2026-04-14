@@ -1,9 +1,105 @@
 {
   "name": "rag-knowledge-mcp",
-  "description": "Rag Knowledge MCP Server by MEOK AI Labs",
+  "description": "By **MEOK AI Labs** | https://meok.ai",
   "version": "1.0.0",
-  "author": "MEOK AI Labs",
-  "license": "MIT",
-  "repository": "https://github.com/CSOAI-ORG/rag-knowledge-mcp",
-  "install": "pip install mcp && python server.py"
+  "tools": [
+    {
+      "name": "semantic_search",
+      "description": "Semantic search over indexed documents.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "top_k": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "knowledge_graph_query",
+      "description": "Query the knowledge graph by entity and optional relation.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "entity": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "entity"
+        ]
+      }
+    },
+    {
+      "name": "index_document",
+      "description": "Index a document into vector store and knowledge graph.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "doc_id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "title",
+          "text"
+        ]
+      }
+    },
+    {
+      "name": "extract_entities_tool",
+      "description": "Extract regulatory entities from text.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      }
+    },
+    {
+      "name": "cross_reference",
+      "description": "Find cross-references between two frameworks for a term.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "term": {
+            "type": "string"
+          },
+          "framework_a": {
+            "type": "string"
+          },
+          "framework_b": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "term",
+          "framework_a",
+          "framework_b"
+        ]
+      }
+    }
+  ]
 }

@@ -1,9 +1,52 @@
-author: MEOK AI Labs
-description: Rag Knowledge MCP Server
-license: MIT
 name: rag-knowledge-mcp
-repository: https://github.com/CSOAI-ORG/rag-knowledge-mcp
-tools:
-- description: See server.py
-  name: tool
+description: By **MEOK AI Labs** | https://meok.ai
 version: 1.0.0
+tools:
+- name: semantic_search
+  description: Semantic search over indexed documents.
+  parameters:
+  - name: query
+    type: string
+    required: true
+  - name: top_k
+    type: integer
+    required: false
+- name: knowledge_graph_query
+  description: Query the knowledge graph by entity and optional relation.
+  parameters:
+  - name: entity
+    type: string
+    required: true
+  - name: relation
+    type: string
+    required: false
+- name: index_document
+  description: Index a document into vector store and knowledge graph.
+  parameters:
+  - name: title
+    type: string
+    required: true
+  - name: text
+    type: string
+    required: true
+  - name: doc_id
+    type: string
+    required: false
+- name: extract_entities_tool
+  description: Extract regulatory entities from text.
+  parameters:
+  - name: text
+    type: string
+    required: true
+- name: cross_reference
+  description: Find cross-references between two frameworks for a term.
+  parameters:
+  - name: term
+    type: string
+    required: true
+  - name: framework_a
+    type: string
+    required: true
+  - name: framework_b
+    type: string
+    required: true

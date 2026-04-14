@@ -57,20 +57,28 @@ def _extract_entities(text: str) -> List[dict]:
 @mcp.tool(name="semantic_search")
 async def semantic_search(query: str, top_k: int = 5, api_key: str = "") -> str:
     """Semantic search over indexed documents."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     if not _DOCUMENTS:
-        return json.dumps({"results": [], "message": "No documents indexed yet. Use index_document first."})
+        return {"results": [], "message": "No documents indexed yet. Use index_document first."}
     q_vec = _embed(query)
     scores = []
     for doc_id, doc in _DOCUMENTS.items():
         score = _cosine(q_vec, doc["embedding"])
         scores.append({"id": doc_id, "score": round(score, 4), "title": doc["title"], "snippet": doc["text"][:200]})
     scores.sort(key=lambda x: x["score"], reverse=True)
-    return json.dumps({"query": query, "results": scores[:top_k]})
+    return {"query": query, "results": scores[:top_k]}
 
 
 @mcp.tool(name="knowledge_graph_query")
 async def knowledge_graph_query(entity: str, relation: Optional[str] = None, api_key: str = "") -> str:
     """Query the knowledge graph by entity and optional relation."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     entity = entity.lower()
     matches = []
     for src, rels in _GRAPH.items():
@@ -78,12 +86,16 @@ async def knowledge_graph_query(entity: str, relation: Optional[str] = None, api
             for r in rels:
                 if relation is None or relation.lower() in r["relation"].lower():
                     matches.append({"from": src, "to": r["target"], "relation": r["relation"], "weight": r.get("weight", 1.0)})
-    return json.dumps({"entity": entity, "relation": relation, "matches": matches})
+    return {"entity": entity, "relation": relation, "matches": matches}
 
 
 @mcp.tool(name="index_document")
 async def index_document(title: str, text: str, doc_id: Optional[str] = None, api_key: str = "") -> str:
     """Index a document into vector store and knowledge graph."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     doc_id = doc_id or hashlib.md5(text.encode()).hexdigest()[:12]
     embedding = _embed(text)
     _DOCUMENTS[doc_id] = {"title": title, "text": text, "embedding": embedding}
@@ -97,18 +109,27 @@ async def index_document(title: str, text: str, doc_id: Optional[str] = None, ap
             _GRAPH[r] = []
         for a in arts:
             _GRAPH[r].append({"target": a, "relation": "has_article", "source_doc": doc_id, "weight": 1.0})
-    return json.dumps({"doc_id": doc_id, "indexed": True, "entities_found": len(entities)})
+    return {"doc_id": doc_id, "indexed": True, "entities_found": len(entities)}
 
 
 @mcp.tool(name="extract_entities")
 async def extract_entities_tool(text: str, api_key: str = "") -> str:
     """Extract regulatory entities from text."""
-    return json.dumps({"entities": _extract_entities(text)})
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
+    return {"entities": _extract_entities(text)}
+    return {"entities": _extract_entities(text)}
 
 
 @mcp.tool(name="cross_reference")
 async def cross_reference(term: str, framework_a: str, framework_b: str, api_key: str = "") -> str:
     """Find cross-references between two frameworks for a term."""
+    allowed, msg, tier = check_access(api_key)
+    if not allowed:
+        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+
     q_vec = _embed(term)
     docs_a = []
     docs_b = []
@@ -122,12 +143,12 @@ async def cross_reference(term: str, framework_a: str, framework_b: str, api_key
             docs_b.append({"id": doc_id, "score": round(score, 4), "title": doc["title"]})
     docs_a.sort(key=lambda x: x["score"], reverse=True)
     docs_b.sort(key=lambda x: x["score"], reverse=True)
-    return json.dumps({
+    return {
         "term": term,
         framework_a: docs_a[:3],
         framework_b: docs_b[:3],
         "note": "Cross-reference confidence based on semantic similarity."
-    })
+    }
 
 
 if __name__ == "__main__":
