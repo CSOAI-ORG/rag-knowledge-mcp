@@ -14,6 +14,10 @@ import re
 import hashlib
 from typing import Optional, List
 from mcp.server.fastmcp import FastMCP
+import sys, os
+sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
+from auth_middleware import check_access
+
 
 mcp = FastMCP("rag-knowledge-mcp")
 
@@ -51,7 +55,7 @@ def _extract_entities(text: str) -> List[dict]:
 
 
 @mcp.tool(name="semantic_search")
-async def semantic_search(query: str, top_k: int = 5) -> str:
+async def semantic_search(query: str, top_k: int = 5, api_key: str = "") -> str:
     """Semantic search over indexed documents."""
     if not _DOCUMENTS:
         return json.dumps({"results": [], "message": "No documents indexed yet. Use index_document first."})
@@ -65,7 +69,7 @@ async def semantic_search(query: str, top_k: int = 5) -> str:
 
 
 @mcp.tool(name="knowledge_graph_query")
-async def knowledge_graph_query(entity: str, relation: Optional[str] = None) -> str:
+async def knowledge_graph_query(entity: str, relation: Optional[str] = None, api_key: str = "") -> str:
     """Query the knowledge graph by entity and optional relation."""
     entity = entity.lower()
     matches = []
@@ -78,7 +82,7 @@ async def knowledge_graph_query(entity: str, relation: Optional[str] = None) -> 
 
 
 @mcp.tool(name="index_document")
-async def index_document(title: str, text: str, doc_id: Optional[str] = None) -> str:
+async def index_document(title: str, text: str, doc_id: Optional[str] = None, api_key: str = "") -> str:
     """Index a document into vector store and knowledge graph."""
     doc_id = doc_id or hashlib.md5(text.encode()).hexdigest()[:12]
     embedding = _embed(text)
@@ -97,13 +101,13 @@ async def index_document(title: str, text: str, doc_id: Optional[str] = None) ->
 
 
 @mcp.tool(name="extract_entities")
-async def extract_entities_tool(text: str) -> str:
+async def extract_entities_tool(text: str, api_key: str = "") -> str:
     """Extract regulatory entities from text."""
     return json.dumps({"entities": _extract_entities(text)})
 
 
 @mcp.tool(name="cross_reference")
-async def cross_reference(term: str, framework_a: str, framework_b: str) -> str:
+async def cross_reference(term: str, framework_a: str, framework_b: str, api_key: str = "") -> str:
     """Find cross-references between two frameworks for a term."""
     q_vec = _embed(term)
     docs_a = []
