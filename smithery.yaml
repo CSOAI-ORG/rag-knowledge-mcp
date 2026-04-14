@@ -1,0 +1,9 @@
+author: MEOK AI Labs
+description: Rag Knowledge MCP Server
+license: MIT
+name: rag-knowledge-mcp
+repository: https://github.com/CSOAI-ORG/rag-knowledge-mcp
+tools:
+- description: See server.py
+  name: tool
+version: 1.0.0

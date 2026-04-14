@@ -1,0 +1,9 @@
+{
+  "name": "rag-knowledge-mcp",
+  "description": "Rag Knowledge MCP Server by MEOK AI Labs",
+  "version": "1.0.0",
+  "author": "MEOK AI Labs",
+  "license": "MIT",
+  "repository": "https://github.com/CSOAI-ORG/rag-knowledge-mcp",
+  "install": "pip install mcp && python server.py"
+}
