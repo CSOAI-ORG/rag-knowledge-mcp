@@ -18,8 +18,18 @@ import sys, os
 sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
 from auth_middleware import check_access
 
+from datetime import datetime, timezone
+from collections import defaultdict
 
-mcp = FastMCP("rag-knowledge-mcp")
+FREE_DAILY_LIMIT = 15
+_usage = defaultdict(list)
+def _rl(c="anon"):
+    now = datetime.now(timezone.utc)
+    _usage[c] = [t for t in _usage[c] if (now-t).total_seconds() < 86400]
+    if len(_usage[c]) >= FREE_DAILY_LIMIT: return json.dumps({"error": f"Limit {FREE_DAILY_LIMIT}/day"})
+    _usage[c].append(now); return None
+
+mcp = FastMCP("rag-knowledge", instructions="MEOK AI Labs MCP Server")
 
 # In-memory vector index (replace with pgvector/Neo4j in production)
 _DOCUMENTS: dict[str, dict] = {}
@@ -54,12 +64,13 @@ def _extract_entities(text: str) -> List[dict]:
     return found
 
 
-@mcp.tool(name="semantic_search")
-async def semantic_search(query: str, top_k: int = 5, api_key: str = "") -> str:
+@mcp.tool()
+def semantic_search(query: str, top_k: int = 5, api_key: str = "") -> str:
     """Semantic search over indexed documents."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     if not _DOCUMENTS:
         return {"results": [], "message": "No documents indexed yet. Use index_document first."}
@@ -72,12 +83,13 @@ async def semantic_search(query: str, top_k: int = 5, api_key: str = "") -> str:
     return {"query": query, "results": scores[:top_k]}
 
 
-@mcp.tool(name="knowledge_graph_query")
-async def knowledge_graph_query(entity: str, relation: Optional[str] = None, api_key: str = "") -> str:
+@mcp.tool()
+def knowledge_graph_query(entity: str, relation: Optional[str] = None, api_key: str = "") -> str:
     """Query the knowledge graph by entity and optional relation."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     entity = entity.lower()
     matches = []
@@ -89,12 +101,13 @@ async def knowledge_graph_query(entity: str, relation: Optional[str] = None, api
     return {"entity": entity, "relation": relation, "matches": matches}
 
 
-@mcp.tool(name="index_document")
-async def index_document(title: str, text: str, doc_id: Optional[str] = None, api_key: str = "") -> str:
+@mcp.tool()
+def index_document(title: str, text: str, doc_id: Optional[str] = None, api_key: str = "") -> str:
     """Index a document into vector store and knowledge graph."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     doc_id = doc_id or hashlib.md5(text.encode()).hexdigest()[:12]
     embedding = _embed(text)
@@ -112,23 +125,25 @@ async def index_document(title: str, text: str, doc_id: Optional[str] = None, ap
     return {"doc_id": doc_id, "indexed": True, "entities_found": len(entities)}
 
 
-@mcp.tool(name="extract_entities")
-async def extract_entities_tool(text: str, api_key: str = "") -> str:
+@mcp.tool()
+def extract_entities_tool(text: str, api_key: str = "") -> str:
     """Extract regulatory entities from text."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     return {"entities": _extract_entities(text)}
     return {"entities": _extract_entities(text)}
 
 
-@mcp.tool(name="cross_reference")
-async def cross_reference(term: str, framework_a: str, framework_b: str, api_key: str = "") -> str:
+@mcp.tool()
+def cross_reference(term: str, framework_a: str, framework_b: str, api_key: str = "") -> str:
     """Find cross-references between two frameworks for a term."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+    if err := _rl(): return err
 
     q_vec = _embed(term)
     docs_a = []
