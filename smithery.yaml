@@ -1,5 +1,6 @@
 name: rag-knowledge-mcp
-description: MEOK AI Labs MCP Server
+description: MCP server for rag knowledge. Features semantic search, knowledge graph
+  query, index document. From MEOK AI Labs.
 version: 1.0.0
 tools:
 - name: semantic_search

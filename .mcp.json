@@ -1,6 +1,6 @@
 {
   "name": "rag-knowledge-mcp",
-  "description": "> **By [MEOK AI Labs](https://meok.ai)** \u2014 MEOK AI Labs MCP Server",
+  "description": "MCP server for rag knowledge. Features semantic search, knowledge graph query, index document. From MEOK AI Labs.",
   "version": "1.0.0",
   "tools": [
     {
