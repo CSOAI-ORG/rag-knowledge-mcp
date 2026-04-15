@@ -1,0 +1,56 @@
+{
+  "name": "rag-knowledge",
+  "description": "Rag Knowledge tools powered by MEOK AI Labs.",
+  "version": "1.0.0",
+  "protocol_version": "2025-11-25",
+  "publisher": {
+    "name": "MEOK AI Labs",
+    "url": "https://meok.ai",
+    "email": "nicholas@meok.ai"
+  },
+  "repository": "https://github.com/CSOAI-ORG/rag-knowledge-mcp",
+  "license": "MIT",
+  "transport": [
+    "stdio",
+    "streamable-http"
+  ],
+  "authentication": {
+    "type": "api-key",
+    "free_tier": true,
+    "free_limit": "15 calls/day"
+  },
+  "tools": [
+    {
+      "name": "semantic_search",
+      "description": "Semantic search over indexed documents."
+    },
+    {
+      "name": "knowledge_graph_query",
+      "description": "Query the knowledge graph by entity and optional relation."
+    },
+    {
+      "name": "index_document",
+      "description": "Index a document into vector store and knowledge graph."
+    },
+    {
+      "name": "extract_entities_tool",
+      "description": "Extract regulatory entities from text."
+    },
+    {
+      "name": "cross_reference",
+      "description": "Find cross-references between two frameworks for a term."
+    }
+  ],
+  "categories": [
+    "AI & Machine Learning"
+  ],
+  "pricing": {
+    "free": {
+      "calls_per_day": 15
+    },
+    "pro": {
+      "price": "$29/month",
+      "url": "https://meok.ai/pricing"
+    }
+  }
+}
