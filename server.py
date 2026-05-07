@@ -82,6 +82,12 @@ def semantic_search(query: str, top_k: int = 5, api_key: str = "") -> str:
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        query (str): The query to analyze or process.
+        top_k (int): The top k to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -131,6 +137,12 @@ def knowledge_graph_query(entity: str, relation: Optional[str] = None, api_key: 
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        entity (str): The entity to analyze or process.
+        relation (Optional[str]): The relation to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -179,6 +191,13 @@ def index_document(title: str, text: str, doc_id: Optional[str] = None, api_key:
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        title (str): The title to analyze or process.
+        text (str): The text to analyze or process.
+        doc_id (Optional[str]): The doc id to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -233,6 +252,11 @@ def extract_entities_tool(text: str, api_key: str = "") -> str:
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        text (str): The text to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -275,6 +299,13 @@ def cross_reference(term: str, framework_a: str, framework_b: str, api_key: str 
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        term (str): The term to analyze or process.
+        framework_a (str): The framework a to analyze or process.
+        framework_b (str): The framework b to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
