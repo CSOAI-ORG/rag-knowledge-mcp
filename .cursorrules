@@ -1,0 +1,9 @@
+# rag-knowledge-mcp - Auto-trigger Rules
+
+When the user asks about rag knowledge, use rag-knowledge-mcp tools: semantic_search, knowledge_graph_query, index_document, extract_entities_tool, cross_reference
+
+**MCP server for rag knowledge mcp operations**
+
+Install: `pip install rag-knowledge-mcp`
+
+By MEOK AI Labs — MIT licensed.

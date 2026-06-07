@@ -1,0 +1,28 @@
+{
+  "name": "rag-knowledge-mcp",
+  "title": "Rag Knowledge Mcp",
+  "description": "MCP server for rag knowledge. Features semantic search, knowledge graph query, index document. From MEOK AI Labs.",
+  "version": "1.0.6",
+  "homepage": "https://meok.ai",
+  "license": "MIT",
+  "transport": {
+    "type": "stdio"
+  },
+  "tools": [
+    {
+      "name": "semantic_search"
+    },
+    {
+      "name": "knowledge_graph_query"
+    },
+    {
+      "name": "index_document"
+    },
+    {
+      "name": "extract_entities_tool"
+    },
+    {
+      "name": "cross_reference"
+    }
+  ]
+}

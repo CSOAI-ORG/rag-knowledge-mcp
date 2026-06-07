@@ -1,0 +1,36 @@
+# rag-knowledge-mcp
+# **MCP server for rag knowledge mcp operations**
+
+## Install
+```bash
+pip install rag-knowledge-mcp
+```
+
+## Auth & Rate Limits
+- Free tier: 10 calls/day. No API key required.
+- Pro tier (£79/mo): unlimited + signed attestations.
+- Enterprise (£1,499/mo): white-label.
+
+## Tools
+
+### `semantic_search`
+Semantic search over indexed documents.
+
+### `knowledge_graph_query`
+Query the knowledge graph by entity and optional relation.
+
+### `index_document`
+Index a document into vector store and knowledge graph.
+
+### `extract_entities_tool`
+Extract regulatory entities from text.
+
+### `cross_reference`
+Find cross-references between two frameworks for a term.
+
+
+## Maintainer
+MEOK AI Labs · hello@meok.ai · https://meok.ai · MIT licensed
+
+## Pairs with
+Governance moat: pair this tool with any of MEOK's 38 governance MCPs (EU AI Act, DORA, NIS2, CRA, GDPR, ISO 42001, etc.) for full compliance coverage.

@@ -15,7 +15,6 @@ import hashlib
 from typing import Optional, List
 from mcp.server.fastmcp import FastMCP
 import sys, os
-sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
 from auth_middleware import check_access
 
 from datetime import datetime, timezone
@@ -105,7 +104,7 @@ def semantic_search(query: str, top_k: int = 5, api_key: str = "") -> str:
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(): return err
 
     if not _DOCUMENTS:
@@ -160,7 +159,7 @@ def knowledge_graph_query(entity: str, relation: Optional[str] = None, api_key: 
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(): return err
 
     entity = entity.lower()
@@ -215,7 +214,7 @@ def index_document(title: str, text: str, doc_id: Optional[str] = None, api_key:
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(): return err
 
     doc_id = doc_id or hashlib.md5(text.encode()).hexdigest()[:12]
@@ -274,7 +273,7 @@ def extract_entities_tool(text: str, api_key: str = "") -> str:
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(): return err
 
     return {"entities": _extract_entities(text)}
@@ -323,7 +322,7 @@ def cross_reference(term: str, framework_a: str, framework_b: str, api_key: str 
     """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(): return err
 
     q_vec = _embed(term)
@@ -347,5 +346,8 @@ def cross_reference(term: str, framework_a: str, framework_b: str, api_key: str 
     }
 
 
-if __name__ == "__main__":
+def main():
     mcp.run()
+
+if __name__ == '__main__':
+    main()
