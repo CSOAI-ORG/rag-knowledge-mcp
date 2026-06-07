@@ -1,0 +1,23 @@
+{
+  "acpVersion": "0.1",
+  "agent": {
+    "name": "rag-knowledge-mcp",
+    "description": "Rag Knowledge MCP Server by MEOK AI Labs",
+    "version": "1.0.6",
+    "provider": "MEOK AI Labs",
+    "interfaces": [
+      {
+        "type": "mcp",
+        "transport": "stdio",
+        "package": "rag-knowledge-mcp"
+      }
+    ],
+    "capabilities": [
+      "semantic_search",
+      "knowledge_graph_query",
+      "index_document",
+      "extract_entities_tool",
+      "cross_reference"
+    ]
+  }
+}

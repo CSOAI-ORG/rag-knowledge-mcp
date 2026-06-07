@@ -1,0 +1,68 @@
+{
+  "name": "rag-knowledge-mcp",
+  "description": "Rag Knowledge MCP Server by MEOK AI Labs",
+  "url": "https://proofof.ai/scorecard/rag-knowledge-mcp.html",
+  "version": "1.0.6",
+  "protocolVersion": "0.2.0",
+  "provider": {
+    "organization": "MEOK AI Labs",
+    "url": "https://meok.ai"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": [
+    "text"
+  ],
+  "defaultOutputModes": [
+    "text"
+  ],
+  "skills": [
+    {
+      "id": "semantic_search",
+      "name": "Semantic Search",
+      "description": "semantic_search via rag-knowledge-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "knowledge_graph_query",
+      "name": "Knowledge Graph Query",
+      "description": "knowledge_graph_query via rag-knowledge-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "index_document",
+      "name": "Index Document",
+      "description": "index_document via rag-knowledge-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "extract_entities_tool",
+      "name": "Extract Entities Tool",
+      "description": "extract_entities_tool via rag-knowledge-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "cross_reference",
+      "name": "Cross Reference",
+      "description": "cross_reference via rag-knowledge-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    }
+  ]
+}
